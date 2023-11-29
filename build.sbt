@@ -13,7 +13,9 @@ lazy val root = (project in file("."))
       "mysql" % "mysql-connector-java" % "8.0.33", // your jdbc driver here
       "org.scalikejdbc" %% "scalikejdbc" % "4.1.0",
       "org.scalikejdbc" %% "scalikejdbc-config" % "4.1.0",
-      "org.scalikejdbc" %% "scalikejdbc-play-dbapi-adapter" % "2.8.0-scalikejdbc-4.0"
+      "org.scalikejdbc" %% "scalikejdbc-play-initializer" % "2.8.0-scalikejdbc-4.0",
+      "joda-time" % "joda-time" % "2.12.5",
+      "org.joda" % "joda-convert" % "2.2.2"
     ),
     dependencyOverrides ++= Seq(
       "org.scala-lang.modules" %% "scala-parser-combinators" % "2.3.0",
