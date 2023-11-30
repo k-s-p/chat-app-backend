@@ -1,1 +1,2 @@
 POST /user/register controllers.UserController.register
+POST /user/login controllers.UserController.login

@@ -15,7 +15,8 @@ lazy val root = (project in file("."))
       "org.scalikejdbc" %% "scalikejdbc-config" % "4.1.0",
       "org.scalikejdbc" %% "scalikejdbc-play-initializer" % "2.8.0-scalikejdbc-4.0",
       "joda-time" % "joda-time" % "2.12.5",
-      "org.joda" % "joda-convert" % "2.2.2"
+      "org.joda" % "joda-convert" % "2.2.2",
+      "org.mindrot" % "jbcrypt" % "0.4"
     ),
     dependencyOverrides ++= Seq(
       "org.scala-lang.modules" %% "scala-parser-combinators" % "2.3.0",
