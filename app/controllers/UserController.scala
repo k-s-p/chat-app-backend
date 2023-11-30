@@ -28,7 +28,7 @@ class UserController @Inject()(cc: ControllerComponents, userService: UserServic
         if(user.isEmpty){
           sql"""
                |insert into user (nickname, email, password, created_at, updated_at)
-               |values (${form.nickname.get}, ${form.email.get}, ${userService.hashPassword(form.password.get)}, ${nowDateTime}, ${nowDateTime});
+               |values (${form.nickname.get}, ${form.email.get}, ${userService.hashPassword(form.password.get)}, ${nowDateTime}, ${nowDateTime})
                |""".stripMargin
             .update.apply()
           Ok(Json.obj("return_code" -> 0, "msg" -> "success"))
@@ -47,7 +47,7 @@ class UserController @Inject()(cc: ControllerComponents, userService: UserServic
         sql"""
           select *
           from user
-          where email = ${form.email.get};
+          where email = ${form.email.get}
         """.map(rs => User(rs.int("id"), rs.string("nickname"), rs.string("email"), rs.string("password")))
           .single.apply()
       }
