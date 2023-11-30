@@ -27,9 +27,22 @@ class UserController @Inject()(val controllerComponents: ControllerComponents) e
     Ok(Json.obj("return_code" -> 0, "msg" -> "success"))
   }
 
-  def login(): Action[JsValue] = Action.async(parse.json) { request =>
+  def login(): Action[JsValue] = Action(parse.json) { request =>
     request.body.validate[UserLoginRequest].map{ form =>
-
+      val user: User = DB.readOnly { implicit session =>
+        sql"""
+          select *
+          from user
+          where email = ${form.email.get} AND password = ${form.password.get}
+        """"
+        .map(rs => User(rs.intOpt("id"), rs.stringOpt("nickname"), rs.stringOpt("email"), rs.stringOpt("password")))
+        .single.apply()
+      }
+      if(user.isEmpty()){
+        OK(Json.obj("return_code" -> 10001, "msg" -> "ログイン失敗だよ~"))
+      }else{
+        Ok(Json.obj("return_code" -> 0, "msg" -> "success"))
+      }
     }
   }
 }
