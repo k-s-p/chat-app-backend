@@ -15,7 +15,7 @@ class UserController @Inject()(cc: ControllerComponents, userService: UserServic
   implicit val userLoginRequestReads: Reads[UserLoginRequest] = Json.reads[UserLoginRequest]
 
   def register(): Action[JsValue] = Action(parse.json) { request =>
-    request.body.validate[UserRegisterRequest].map { form =>
+    (request.body \ "data").validate[UserRegisterRequest].map { form =>
       val nowDateTime = DateTime.now()
       DB.localTx { implicit session =>
         val user: Option[User] =
@@ -42,7 +42,7 @@ class UserController @Inject()(cc: ControllerComponents, userService: UserServic
   }
 
   def login(): Action[JsValue] = Action(parse.json) { request =>
-    request.body.validate[UserLoginRequest].map { form =>
+    (request.body \ "data").validate[UserLoginRequest].map { form =>
       val user: Option[User] = DB.readOnly { implicit session =>
         sql"""
           select *
